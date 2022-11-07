@@ -2,24 +2,26 @@
 
 namespace Bodkul\FilamentNavigation;
 
+use Filament\PluginServiceProvider;
 use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Bodkul\FilamentNavigation\Commands\FilamentNavigationCommand;
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
+use Bodkul\FilamentNavigation\Filament\Resources\NavigationResource;
 
-class FilamentNavigationServiceProvider extends PackageServiceProvider
+class FilamentNavigationServiceProvider extends PluginServiceProvider
 {
+    protected array $resources = [
+        NavigationResource::class,
+    ];
+
     public function configurePackage(Package $package): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
         $package
             ->name('filament-navigation')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_filament-navigation_table')
-            ->hasCommand(FilamentNavigationCommand::class);
+            ->hasMigration('create_navigations_table')
+            ->hasInstallCommand(function(InstallCommand $command) {
+                $command
+                    ->publishMigrations()
+                    ->askToStarRepoOnGitHub('bodkul/filament-navigation');
+            });
     }
 }
