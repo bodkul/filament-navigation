@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Bodkul\FilamentNavigation\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class FilamentNavigationCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'filament-navigation';
 
     public $description = 'My command';
 
